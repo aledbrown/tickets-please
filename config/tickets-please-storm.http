@@ -2,7 +2,7 @@
 #GET https://examples.http-client.intellij.net/get?generated-in=PhpStorm
 
 ###
-GET https://tickets-please.test/api/
+POST https://tickets-please.test/api/login?email=4Hn0r@example.com&password=password1234
 Accept: application/json
 
 ###

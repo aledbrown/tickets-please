@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+//:Remember api/
 
 Route::get('/login', [\App\Http\Controllers\AuthController::class, 'login']);
 

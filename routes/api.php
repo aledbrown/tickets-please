@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
 
+Route::get('/tickets', function () {
+    return response()->json([
+        'tickets' => \App\Models\Ticket::get(),
+    ], 200);
+});
+
 // Route::get('/', function () {
 //     return response()->json([
 //         'name' => config('app.name'),

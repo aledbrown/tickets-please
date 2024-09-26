@@ -2,14 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 
-//:Remember api/
-// https://tickets-please.test/api/
 // universal resource locator
+// Remember api/
+// https://tickets-please.test/api/
 // tickets/{id}/edit
-// users
-
 
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login'])->name('login');
+Route::middleware('auth:sanctum')->post('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout'])->name('logout');
+
+
+
+
 // Route::post('/register', [\App\Http\Controllers\Api\AuthController::class, 'register']);
 
 // Route::get('/tickets', function () {

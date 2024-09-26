@@ -26,7 +26,11 @@ class AuthController extends Controller
         return $this->ok(
             'Authenticated',
             [
-                'token' => $user->createToken('API Token for ' . $user->email)->plainTextToken
+                'token' => $user->createToken(
+                    name: 'API Token for ' . $user->email,
+                    abilities: ['*'],
+                    expiresAt: now()->addMonth()
+                )->plainTextToken
             ]
         );
     }

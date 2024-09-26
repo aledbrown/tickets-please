@@ -6,4 +6,4 @@ use Illuminate\Support\Facades\Route;
 
 
 // api/v1/tickets/{id}
-Route::apiResource('tickets', TicketController::class)->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->apiResource('tickets', TicketController::class);

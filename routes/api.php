@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 //:Remember api/
@@ -10,8 +9,8 @@ use Illuminate\Support\Facades\Route;
 // users
 
 
-Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
-Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
+Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
+Route::post('/register', [\App\Http\Controllers\Api\AuthController::class, 'register']);
 
 // Route::get('/tickets', function () {
 //     return response()->json([

@@ -2,23 +2,47 @@
 
 namespace App\Http\Filters\V1;
 
+use Illuminate\Database\Eloquent\Builder;
+
 class TicketFilter extends QueryFilter
 {
-    public function status($value)
+    public function include($value): Builder
     {
-        return $this->builder->where('status', $value);
+        return $this->builder->with($value);
     }
 
-    public function filter($query, array $filters)
+    public function status($value): Builder
     {
-        if ($filters['name'] ?? false) {
-            $query->where('name', 'like', '%' . $filters['name'] . '%');
-        }
-
-        if ($filters['status'] ?? false) {
-            $query->where('status', $filters['status']);
-        }
-
-        return $query;
+        return $this->builder->whereIn('status', explode(',', $value));
     }
+
+    public function title($value): Builder
+    {
+        $likeString = str_replace('*', '%', $value);
+        return $this->builder->where('title', 'like', $likeString);
+        // return $this->builder->where('title', 'like', '%' . $value . '%');
+    }
+
+    public function createdAt($value): Builder
+    {
+        $dates = explode(',', $value);
+
+        if (count($dates) > 1) {
+            return $this->builder->whereBetween('created_at', $dates);
+        }
+
+        return $this->builder->whereDate('created_at', $value);
+    }
+
+    public function updatedAt($value): Builder
+    {
+        $dates = explode(',', $value);
+
+        if (count($dates) > 1) {
+            return $this->builder->whereBetween('updated_at', $dates);
+        }
+
+        return $this->builder->whereDate('updated_at', $value);
+    }
+
 }

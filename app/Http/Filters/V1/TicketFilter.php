@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Builder;
 
 class TicketFilter extends QueryFilter
 {
+    protected array $sortable = [
+        'title',
+        'status',
+        'createdAt' => 'created_at',
+        'updatedAt' => 'updated_at',
+    ];
+
     public function include($value): Builder
     {
         return $this->builder->with($value);
@@ -20,7 +27,6 @@ class TicketFilter extends QueryFilter
     {
         $likeString = str_replace('*', '%', $value);
         return $this->builder->where('title', 'like', $likeString);
-        // return $this->builder->where('title', 'like', '%' . $value . '%');
     }
 
     public function createdAt($value): Builder

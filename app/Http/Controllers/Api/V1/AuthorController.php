@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Filters\V1\AuthorFilter;
 use App\Http\Requests\Api\V1\StoreUserRequest;
 use App\Http\Requests\Api\V1\UpdateUserRequest;
 use App\Http\Resources\V1\UserResource;
@@ -9,12 +10,14 @@ use App\Models\User;
 
 class AuthorController extends ApiController
 {
-    public function index()
+    public function index(AuthorFilter $filters)
     {
-        if ($this->include('tickets')) {
-            return UserResource::collection(User::with('tickets')->paginate());
-        }
-        return UserResource::collection(User::paginate());
+        return UserResource::collection(User::filter($filters)->paginate());
+
+        // if ($this->include('tickets')) {
+        //     return UserResource::collection(User::with('tickets')->paginate());
+        // }
+        // return UserResource::collection(User::paginate());
     }
 
     public function store(StoreUserRequest $request)

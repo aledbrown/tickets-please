@@ -15,17 +15,6 @@ abstract class QueryFilter
         $this->request = $request;
     }
 
-    protected function filter($arr): Builder
-    {
-        foreach ($arr as $filter => $value) {
-            if (method_exists($this, $filter)) {
-                $this->$filter($value);
-            }
-        }
-
-        return $this->builder;
-    }
-
     public function apply(Builder $builder): Builder
     {
         $this->builder = $builder;
@@ -38,4 +27,16 @@ abstract class QueryFilter
 
         return $this->builder;
     }
+
+    protected function filter($arr): Builder
+    {
+        foreach ($arr as $filter => $value) {
+            if (method_exists($this, $filter)) {
+                $this->$filter($value);
+            }
+        }
+
+        return $this->builder;
+    }
+    
 }

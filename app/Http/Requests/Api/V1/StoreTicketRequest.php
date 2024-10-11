@@ -14,6 +14,24 @@ class StoreTicketRequest extends FormRequest
         return true;
     }
 
+    /*
+     * POSTMAN DATA
+    {
+        "data": {
+            "attributes": {
+                "title": "First ticket",
+                "description": "This is the first ticket we created.",
+                "status": "C"
+            },
+            "relationships": {
+                "author": {
+                    "data": { "id": 1 }
+                }
+            }
+        }
+    }
+     */
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -21,12 +39,15 @@ class StoreTicketRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'data.attributes.title' => ['required', 'string'],
-            'data.attributes.description' => ['required', 'string'],
-            'data.attributes.status' => ['required', 'string, in:A,C,H, X'],
-            'data.relationships.author.data.id' => ['required', 'integer'],
+        $rules = [
+            'data.attributes.title' => 'required|string',
+            'data.attributes.description' => 'required|string',
+            'data.attributes.status' => 'required|string|in:A,C,H,X',
         ];
+        if ($this->routeIs('tickets.store')) {
+            $rules['data.relationships.author.data.id'] = 'required|integer';
+        }
+        return $rules;
     }
 
     public function messages()

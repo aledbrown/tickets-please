@@ -50,12 +50,17 @@ class TicketController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(Ticket $ticket)
+    public function show($ticket_id)
     {
-        if ($this->include('author')) {
-            return new TicketResource($ticket->load('author'));
+        try {
+            $ticket = Ticket::findOrFail($ticket_id);
+            if ($this->include('author')) {
+                return new TicketResource($ticket->load('author'));
+            }
+            return new TicketResource($ticket);
+        } catch (ModelNotFoundException $e) {
+            return $this->error('Ticket not found', 404);
         }
-        return new TicketResource($ticket);
     }
 
     /**

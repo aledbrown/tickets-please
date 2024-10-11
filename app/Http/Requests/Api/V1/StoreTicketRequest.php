@@ -11,7 +11,7 @@ class StoreTicketRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,20 @@ class StoreTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'data.attributes.title' => ['required', 'string'],
+            'data.attributes.description' => ['required', 'string'],
+            'data.attributes.status' => ['required', 'string, in:A,C,H, X'],
+            'data.relationships.author.data.id' => ['required', 'integer'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'data.attributes.title.required' => 'The title field is required.',
+            'data.attributes.description.required' => 'The description field is required.',
+            'data.attributes.status' => 'The data.attributes.status value is invalid. Please use A, C, H, or X.',
+            'data.relationships.author.data.id.required' => 'The author field is required.',
         ];
     }
 }

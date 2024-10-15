@@ -54,12 +54,13 @@ class TicketController extends ApiController
     {
         try {
             $ticket = Ticket::findOrFail($ticket_id);
+
             if ($this->include('author')) {
                 return new TicketResource($ticket->load('author'));
             }
             return new TicketResource($ticket);
         } catch (ModelNotFoundException $e) {
-            return $this->error('Ticket not found', 404);
+            return $this->error('Ticket cannot be found', 404);
         }
     }
 

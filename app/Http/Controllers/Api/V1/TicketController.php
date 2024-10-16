@@ -74,10 +74,42 @@ class TicketController extends ApiController
         return 'update';
     }
 
+    /*
+     * https://tickets-please.test/api/v1/tickets/206
+    {
+        "data": {
+            "attributes": {
+            "title": "We replaced this title",
+            "description": "This is the new description.",
+            "status": "C"
+        },
+        "relationships": {
+            "author": {
+                "data": { "id": 1 }
+                }
+            }
+        }
+    }
+     */
+
     public function replace(ReplaceTicketRequest $request, $ticket_id)
     {
         // PUT
-        return 'replace';
+        try {
+            $ticket = Ticket::findOrFail($ticket_id);
+
+            $model = [
+                'title' => $request->input('data.attributes.title'),
+                'description' => $request->input('data.attributes.description'),
+                'status' => $request->input('data.attributes.status'),
+                'user_id' => $request->input('data.relationships.author.data.id'),
+            ];
+
+            $ticket->update($model);
+            return new TicketResource($ticket);
+        } catch (ModelNotFoundException $e) {
+            return $this->error('Ticket cannot be found', 404);
+        }
     }
 
     /**

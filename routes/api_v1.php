@@ -13,5 +13,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // api/v1/authors/{id}
     Route::apiResource('authors', AuthorController::class);
     // api/v1/authors/{id}/tickets
-    Route::apiResource('authors.tickets', AuthorTicketsController::class);
+    Route::apiResource('authors.tickets', AuthorTicketsController::class)->except(['update']);
+    Route::put('authors/{author}/tickets/{ticket}', [AuthorTicketsController::class, 'replace']);
 });

@@ -68,11 +68,11 @@ class TicketController extends ApiController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTicketRequest $request, $ticket_id)
-    {
-        // PATCH,
-        return 'update';
-    }
+    // public function update(UpdateTicketRequest $request, $ticket_id)
+    // {
+    //     // PATCH,
+    //     return 'update';
+    // }
 
     /*
      * https://tickets-please.test/api/v1/tickets/206

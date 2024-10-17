@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTicketRequest extends FormRequest
+class StoreTicketRequest extends BaseTicketRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,11 +32,6 @@ class StoreTicketRequest extends FormRequest
     }
      */
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         $rules = [
@@ -50,13 +45,4 @@ class StoreTicketRequest extends FormRequest
         return $rules;
     }
 
-    public function messages()
-    {
-        return [
-            'data.attributes.title.required' => 'The title field is required.',
-            'data.attributes.description.required' => 'The description field is required.',
-            'data.attributes.status' => 'The data.attributes.status value is invalid. Please use A, C, H, or X.',
-            'data.relationships.author.data.id.required' => 'The author field is required.',
-        ];
-    }
 }

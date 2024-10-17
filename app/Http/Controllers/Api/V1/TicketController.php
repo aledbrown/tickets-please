@@ -38,14 +38,15 @@ class TicketController extends ApiController
                 'error' => 'The provided user ID does not exist.',
             ]);
         }
+        return new TicketResource(Ticket::create($request->mappedAttributes()));
 
-        $model = [
-            'title' => $request->input('data.attributes.title'),
-            'description' => $request->input('data.attributes.description'),
-            'status' => $request->input('data.attributes.status'),
-            'user_id' => $request->input('data.relationships.author.data.id'),
-        ];
-        return new TicketResource(Ticket::create($model));
+        // $model = [
+        //     'title' => $request->input('data.attributes.title'),
+        //     'description' => $request->input('data.attributes.description'),
+        //     'status' => $request->input('data.attributes.status'),
+        //     'user_id' => $request->input('data.relationships.author.data.id'),
+        // ];
+        // return new TicketResource(Ticket::create($model));
     }
 
     /**
@@ -73,15 +74,7 @@ class TicketController extends ApiController
         // PATCH,
         try {
             $ticket = Ticket::findOrFail($ticket_id);
-
-            $model = [
-                'title' => $request->input('data.attributes.title'),
-                'description' => $request->input('data.attributes.description'),
-                'status' => $request->input('data.attributes.status'),
-                'user_id' => $request->input('data.relationships.author.data.id'),
-            ];
-
-            $ticket->update($model);
+            $ticket->update($request->mappedAttributes());
             return new TicketResource($ticket);
         } catch (ModelNotFoundException $e) {
             return $this->error('Ticket cannot be found', 404);
@@ -111,15 +104,7 @@ class TicketController extends ApiController
         // PUT
         try {
             $ticket = Ticket::findOrFail($ticket_id);
-
-            $model = [
-                'title' => $request->input('data.attributes.title'),
-                'description' => $request->input('data.attributes.description'),
-                'status' => $request->input('data.attributes.status'),
-                'user_id' => $request->input('data.relationships.author.data.id'),
-            ];
-
-            $ticket->update($model);
+            $ticket->update($request->mappedAttributes());
             return new TicketResource($ticket);
         } catch (ModelNotFoundException $e) {
             return $this->error('Ticket cannot be found', 404);

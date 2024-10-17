@@ -23,10 +23,10 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         // https://laravel-news.com/always-render-api-exceptions-as-json-in-laravel
-        $exceptions->shouldRenderJsonWhen(function (Request $request, Throwable $e) {
-            if ($request->is('api/*')) {
-                return true;
-            }
-            return $request->expectsJson();
-        });
+        // $exceptions->shouldRenderJsonWhen(function (Request $request, Throwable $e) {
+        //     if ($request->is('api/*')) {
+        //         return true;
+        //     }
+        //     return $request->expectsJson();
+        // });
     })->create();

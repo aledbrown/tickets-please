@@ -20,8 +20,30 @@ class AuthorTicketsController extends ApiController
         );
     }
 
+    public function replace($author_id, ReplaceTicketRequest $request, $ticket_id)
+    {
+        // PUT
+        try {
+            $ticket = Ticket::findOrFail($ticket_id);
+
+            if ($ticket->user_id == $author_id) {
+                $ticket->update($request->mappedAttributes());
+            }
+            // TODO: Ticket doesn't belong to user
+
+            return new TicketResource($ticket);
+        } catch (ModelNotFoundException $e) {
+            return $this->error('Ticket cannot be found', 404);
+        }
+    }
+
     public function store($author_id, StoreTicketRequest $request)
     {
+        // DEFINITELY BROKEN see POST Author Tickets and test
+        //$request->merge(['data.relationships.author.data.id' => $author_id]);
+        //return new TicketResource(Ticket::create($request->mappedAttributes()));
+
+        // THIS WORKS BUT THERE MUST BE A WAY TO FIX ABOVE
         $model = [
             'title' => $request->input('data.attributes.title'),
             'description' => $request->input('data.attributes.description'),
@@ -31,27 +53,14 @@ class AuthorTicketsController extends ApiController
         return new TicketResource(Ticket::create($model));
     }
 
-    // public function update($author_id, ReplaceTicketRequest $request, $ticket_id)
-    // {
-    //     // PATCH,
-    //     return 'update';
-    // }
-
-    public function replace($author_id, ReplaceTicketRequest $request, $ticket_id)
+    public function update($author_id, UpdateTicketRequest $request, $ticket_id)
     {
-        // PUT
+        // PATCH
         try {
             $ticket = Ticket::findOrFail($ticket_id);
 
             if ($ticket->user_id == $author_id) {
-                $model = [
-                    'title' => $request->input('data.attributes.title'),
-                    'description' => $request->input('data.attributes.description'),
-                    'status' => $request->input('data.attributes.status'),
-                    'user_id' => $request->input('data.relationships.author.data.id'),
-                ];
-
-                $ticket->update($model);
+                $ticket->update($request->mappedAttributes());
             }
             // TODO: Ticket doesn't belong to user
 
@@ -60,6 +69,8 @@ class AuthorTicketsController extends ApiController
             return $this->error('Ticket cannot be found', 404);
         }
     }
+
+
 
     /**
      * Remove the specified resource from storage.

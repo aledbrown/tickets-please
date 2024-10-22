@@ -4,46 +4,48 @@ namespace App\Policies\V1;
 
 use App\Models\Ticket;
 use App\Models\User;
+use App\Permissions\V1\Abilities;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TicketPolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(User $user): bool
+    public function delete(User $user, Ticket $ticket): bool
     {
-        return true;
+        if ($user->tokenCan(Abilities::DeleteTicket)) {
+            return true;
+        } else if ($user->tokenCan(Abilities::DeleteOwnTicket)) {
+            return $user->id === $ticket->user_id;
+        }
+        return false;
     }
 
-    public function view(User $user, Ticket $ticket): bool
+    public function replace(User $user, Ticket $ticket): bool
     {
-        return true;
+        if ($user->tokenCan(Abilities::ReplaceTicket)) {
+            return true;
+        }
+        return false;
     }
 
-    public function create(User $user): bool
+    public function store(User $user, Ticket $ticket): bool
     {
-        return true;
+        if ($user->tokenCan(Abilities::CreateTicket)) {
+            return true;
+        }
+        return false;
     }
 
     public function update(User $user, Ticket $ticket): bool
     {
-        // TODO check for token ability
         // PATCH
-        return $user->id === $ticket->user_id;
+        if ($user->tokenCan(Abilities::UpdateTicket)) {
+            return true;
+        } else if ($user->tokenCan(Abilities::UpdateOwnTicket)) {
+            return $user->id === $ticket->user_id;
+        }
+        return false;
     }
 
-    public function delete(User $user, Ticket $ticket): bool
-    {
-        return $user->id === $ticket->user_id;
-    }
-
-    public function restore(User $user, Ticket $ticket): bool
-    {
-        return $user->id === $ticket->user_id;
-    }
-
-    public function forceDelete(User $user, Ticket $ticket): bool
-    {
-        return $user->id === $ticket->user_id;
-    }
 }

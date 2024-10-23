@@ -20,7 +20,7 @@ class AuthorTicketsController extends ApiController
         );
     }
 
-    public function replace($author_id, ReplaceTicketRequest $request, $ticket_id)
+    public function replace(ReplaceTicketRequest $request,$author_id, $ticket_id)
     {
         // PUT
         try {
@@ -37,7 +37,7 @@ class AuthorTicketsController extends ApiController
         }
     }
 
-    public function store($author_id, StoreTicketRequest $request)
+    public function store(StoreTicketRequest $request, $author_id)
     {
         // DEFINITELY BROKEN see POST Author Tickets and test
         //$request->merge(['data.relationships.author.data.id' => $author_id]);
@@ -53,7 +53,7 @@ class AuthorTicketsController extends ApiController
         return new TicketResource(Ticket::create($model));
     }
 
-    public function update($author_id, UpdateTicketRequest $request, $ticket_id)
+    public function update(UpdateTicketRequest $request, $author_id, $ticket_id)
     {
         // PATCH
         try {

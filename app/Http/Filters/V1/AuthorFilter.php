@@ -57,4 +57,16 @@ class AuthorFilter extends QueryFilter
         return $this->builder->whereDate('updated_at', $value);
     }
 
+    public function isManager($value): Builder
+    {
+        if ($value === 'true' || $value === 'false') {
+            $value = $value === 'true' ? 1 : 0;
+            return $this->builder->where('is_manager', $value);
+        }
+        if ($value === '1' || $value === '0') {
+            return $this->builder->where('is_manager', $value);
+        }
+        return $this->builder;
+    }
+
 }

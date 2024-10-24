@@ -121,6 +121,8 @@ class TicketController extends ApiController
             return new TicketResource($ticket);
         } catch (ModelNotFoundException $e) {
             return $this->error('Ticket cannot be found', 404);
+        } catch (AuthorizationException $e) {
+            return $this->error('You are not authorised to replace this ticket', 403);
         }
     }
 
@@ -137,6 +139,8 @@ class TicketController extends ApiController
             return $this->ok('Ticket deleted');
         } catch (ModelNotFoundException $e) {
             return $this->error('Ticket not found', 404);
+        } catch (AuthorizationException $e) {
+            return $this->error('You are not authorised to update this ticket', 403);
         }
     }
 }

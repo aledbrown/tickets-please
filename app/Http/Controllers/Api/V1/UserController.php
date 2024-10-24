@@ -47,12 +47,9 @@ class UserController extends ApiController
         // PATCH,
         try {
             $user = User::findOrFail($user_id);
-
             // RUN POLICY CHECK (V1)
             $this->authorize('update', $user);
-
             $user->update($request->mappedAttributes());
-
             return new UserResource($user);
         } catch (ModelNotFoundException $e) {
             return $this->error('User cannot be found', 404);
@@ -72,6 +69,8 @@ class UserController extends ApiController
             return new UserResource($user);
         } catch (ModelNotFoundException $e) {
             return $this->error('User cannot be found', 404);
+        } catch (AuthorizationException $e) {
+            return $this->error('You are not authorised to replace this user', 403);
         }
     }
 
@@ -88,6 +87,8 @@ class UserController extends ApiController
             return $this->ok('User deleted');
         } catch (ModelNotFoundException $e) {
             return $this->error('User not found', 404);
+        } catch (AuthorizationException $e) {
+            return $this->error('You are not authorised to delete this user', 403);
         }
     }
 }

@@ -15,7 +15,7 @@ class StoreUserRequest extends BaseUserRequest
     {
         return [
             'data.attributes.name' => 'required|string',
-            'data.attributes.email' => 'required|email',
+            'data.attributes.email' => 'required|email|unique:users,email',
             'data.attributes.isManager' => 'required|boolean',
             'data.attributes.password' => 'required|string',
         ];

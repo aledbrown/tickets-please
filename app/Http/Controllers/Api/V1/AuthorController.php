@@ -19,22 +19,7 @@ class AuthorController extends ApiController
             ->distinct()
             ->paginate()
         );
-
-
-        // return UserResource::collection(
-        //     User::filter($filters)->paginate()
-        // );
-
-        // if ($this->include('tickets')) {
-        //     return UserResource::collection(User::with('tickets')->paginate());
-        // }
-        // return UserResource::collection(User::paginate());
     }
-
-    // public function store(StoreUserRequest $request)
-    // {
-    //     //
-    // }
 
     public function show(User $author)
     {
@@ -44,13 +29,4 @@ class AuthorController extends ApiController
         return new UserResource($author);
     }
 
-    // public function update(UpdateUserRequest $request, User $user)
-    // {
-    //     //
-    // }
-
-    // public function destroy(User $user)
-    // {
-    //     //
-    // }
 }

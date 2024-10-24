@@ -15,7 +15,7 @@ class UpdateUserRequest extends BaseUserRequest
     {
         return [
             'data.attributes.name' => 'sometimes|string',
-            'data.attributes.email' => 'sometimes|email',
+            'data.attributes.email' => 'sometimes|email|unique:users,email',
             'data.attributes.isManager' => 'sometimes|boolean',
             'data.attributes.password' => 'sometimes|string',
         ];

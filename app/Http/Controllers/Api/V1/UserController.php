@@ -81,6 +81,9 @@ class UserController extends ApiController
             $user = User::findOrFail($user_id);
             // RUN POLICY CHECK (V1)
             $this->authorize('delete', $user);
+            if ($user->tickets()->exists()) {
+                return $this->error('User has associated tickets and cannot be deleted.', 400);
+            }
             $user->delete();
             return $this->ok('User deleted');
         } catch (ModelNotFoundException $e) {

@@ -31,10 +31,10 @@ class AuthorController extends ApiController
         // return UserResource::collection(User::paginate());
     }
 
-    public function store(StoreUserRequest $request)
-    {
-        //
-    }
+    // public function store(StoreUserRequest $request)
+    // {
+    //     //
+    // }
 
     public function show(User $author)
     {
@@ -44,13 +44,13 @@ class AuthorController extends ApiController
         return new UserResource($author);
     }
 
-    public function update(UpdateUserRequest $request, User $user)
-    {
-        //
-    }
+    // public function update(UpdateUserRequest $request, User $user)
+    // {
+    //     //
+    // }
 
-    public function destroy(User $user)
-    {
-        //
-    }
+    // public function destroy(User $user)
+    // {
+    //     //
+    // }
 }

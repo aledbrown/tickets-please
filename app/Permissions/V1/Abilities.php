@@ -23,7 +23,6 @@ final class Abilities
 
     public static function getAbilities(User $user)
     {
-        // don't assign '*' ability to anyone
         if ($user->is_manager) {
             return [
                 self::CreateTicket,

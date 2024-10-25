@@ -33,7 +33,7 @@ class BaseTicketRequest extends FormRequest
         return [
             'data.attributes.title' => 'The title field is required.',
             'data.attributes.description' => 'The description field is required.',
-            'data.attributes.status' => 'The data.attributes.status value is invalid. Please use A, C, H, or X.',
+            'data.attributes.status' => 'The status value is invalid. Please use A, C, H, or X.',
             'data.relationships.author.data.id' => 'The author field is required.',
         ];
     }

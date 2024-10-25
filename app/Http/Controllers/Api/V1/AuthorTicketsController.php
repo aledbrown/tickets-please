@@ -8,6 +8,7 @@ use App\Http\Requests\Api\V1\StoreTicketRequest;
 use App\Http\Requests\Api\V1\UpdateTicketRequest;
 use App\Http\Resources\V1\TicketResource;
 use App\Models\Ticket;
+use App\Models\User;
 use App\Policies\V1\TicketPolicy;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -16,15 +17,25 @@ class AuthorTicketsController extends ApiController
 {
     protected string $policyClass = TicketPolicy::class;
 
-    public function index($author_id, TicketFilter $filters)
+    public function index(User $author, TicketFilter $filters)
     {
         return TicketResource::collection(
-            Ticket::where('user_id', $author_id)
+            Ticket::where('user_id', $author->id)
                 ->filter($filters)->paginate()
         );
     }
 
-    public function replace(ReplaceTicketRequest $request,$author_id, $ticket_id)
+    // public function replace(ReplaceTicketRequest $request, User $author, Ticket $ticket)
+    // {
+    //     // PUT
+    //     if ($this->authorize('replace', $ticket)) {
+    //         $ticket->update($request->mappedAttributes());
+    //         return new TicketResource($ticket);
+    //     }
+    //     return $this->notAuthorized('You are not authorized to update that resource');
+    // }
+
+    public function replace(ReplaceTicketRequest $request, $author_id, $ticket_id)
     {
         // PUT
         try {

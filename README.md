@@ -16,3 +16,5 @@
 > https://scribe.knuckles.wtf/laravel/
 > composer require --dev knuckleswtf/scribe
 > php artisan vendor:publish --tag=scribe-config
+> setup config
+> php artisan scribe:generate

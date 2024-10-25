@@ -10,3 +10,9 @@
 
 ## Info
 > Route prefix and new api route file added to Laravel 11 in bootstrap/app.php
+
+## Documentation
+> Using "scribe"
+> https://scribe.knuckles.wtf/laravel/
+> composer require --dev knuckleswtf/scribe
+> php artisan vendor:publish --tag=scribe-config

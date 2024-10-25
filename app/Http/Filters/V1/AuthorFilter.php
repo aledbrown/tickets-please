@@ -18,10 +18,10 @@ class AuthorFilter extends QueryFilter
         return $this->builder->with($value);
     }
 
-    public function id($value): Builder
-    {
-        return $this->builder->whereIn('id', explode(',', $value));
-    }
+    // public function id($value): Builder
+    // {
+    //     return $this->builder->whereIn('id', explode(',', $value));
+    // }
 
     public function email($value): Builder
     {

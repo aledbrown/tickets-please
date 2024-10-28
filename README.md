@@ -18,3 +18,5 @@
 > php artisan vendor:publish --tag=scribe-config
 > setup config
 > php artisan scribe:generate
+> If generate won't run (null errors for auth user) then make sure the API key in Scribe.php is valid.
+> 

@@ -10,17 +10,31 @@ use App\Models\User;
 
 class AuthorController extends ApiController
 {
+    /**
+     * Get authors.
+     *
+     * Retrieves all users that created a ticket.
+     *
+     * @group Showing Authors
+     */
     public function index(AuthorFilter $filters)
     {
         return UserResource::collection(
             User::select('users.*')
-            ->join('tickets', 'users.id', '=', 'tickets.user_id')
-            ->filter($filters)
-            ->distinct()
-            ->paginate()
+                ->join('tickets', 'users.id', '=', 'tickets.user_id')
+                ->filter($filters)
+                ->distinct()
+                ->paginate()
         );
     }
 
+    /**
+     * Get an author.
+     *
+     * Retrieves all users that created a ticket.
+     *
+     * @group Showing Authors
+     */
     public function show(User $author)
     {
         if ($this->include('tickets')) {

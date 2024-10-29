@@ -11,6 +11,15 @@
 ## Info
 > Route prefix and new api route file added to Laravel 11 in bootstrap/app.php
 
+## Setup from Github
+> composer install
+> npm install
+> php artisan migrate (to create an SQLite db)
+> php artisan migrate:fresh --seed
+
+## Postman Routes
+> https://tickets-please.test/api/login
+
 ## Documentation
 > Using "scribe"
 > https://scribe.knuckles.wtf/laravel/
